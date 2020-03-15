@@ -1,0 +1,50 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  &__logo {
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  &__links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+
+    & li {
+      margin: 12px;
+      cursor: pointer;
+      i {
+        margin-right: 5px;
+      }
+    }
+
+    &__signup {
+      background-color: $color-teal;
+      padding: 10px 30px;
+      border-radius: 25px;
+      &:hover {
+        color: $color-white;
+        background-color: $color-teal-dark;
+      }
+    }
+  }
+
+  &__left {
+    display: flex;
+  }
+
+  &__right {
+    display: flex;
+  }
+
+  &__icon-links {
+    display: flex;
+  }
+
+  &__login-signup {
+    display: flex;
+  }
+}

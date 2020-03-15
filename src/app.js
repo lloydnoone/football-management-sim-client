@@ -4,7 +4,9 @@ import axios from 'axios'
 
 import localAuth from '../lib/localAuth'
 
-import './style.scss'
+import Navbar from '../components/Navbar'
+
+import './styles/main.scss'
 
 function App() {
   const [userData, setUserData] = useState(null)
@@ -19,13 +21,16 @@ function App() {
   }, [userData])
 
   return (
-    userData &&
-    <>
-      <h1>User!</h1>
-      {userData.map(user => {
-        return <li key={ user._id }>{user.firstName}</li>
-      })}
-    </>
+    <main>
+      <Navbar />
+      {userData &&
+      <>
+        <h1>User!</h1>
+        {userData.map(user => {
+          return <li key={ user._id }>{user.firstName}</li>
+        })}
+      </>}
+    </main>
   )
 }
 
