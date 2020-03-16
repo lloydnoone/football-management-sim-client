@@ -1,0 +1,9 @@
+.panelWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-grey-light;
+  width: fit-content;
+  height: fit-content;
+  padding: 20px;
+}

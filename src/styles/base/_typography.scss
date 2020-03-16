@@ -29,3 +29,34 @@ body {
     }
   }
 }
+
+.formWrapper {
+  &__h2 {
+    font-size: 1.7rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+  }
+
+  &__link {
+    font-weight: 400;
+    &__highlight {
+      color: $color-teal;
+    }
+  }
+
+  label {
+    font-size: 1.3rem;
+    font-weight: 400;
+  }
+}
+
+.btn {
+  text-decoration: none;
+  list-style: none;
+  letter-spacing: -.24px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.4rem;
+  margin: 5px;
+}

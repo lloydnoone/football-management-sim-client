@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import localAuth from '../lib/localAuth'
-
 import Navbar from '../components/Navbar'
+import Home from '../views/Home'
+import Register from '../views/authViews/Register'
 
 import './styles/main.scss'
 
 function App() {
-  const [userData, setUserData] = useState(null)
+  const [userData, setUserData] = useState({})
   useEffect(() => {
     axios.get('api/users')
       .then(res => setUserData(res.data))
@@ -21,16 +22,20 @@ function App() {
   }, [userData])
 
   return (
-    <main>
-      <Navbar />
-      {userData &&
-      <>
-        <h1>User!</h1>
-        {userData.map(user => {
-          return <li key={ user._id }>{user.firstName}</li>
-        })}
-      </>}
-    </main>
+    <BrowserRouter>
+      <main>
+        <Navbar />
+        <Switch>
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/" component={Home} />
+          {/* <Route exact path="/cigars/:id/edit" component={CigarEdit} />
+            <Route exact path="/cigars/new" component={CigarNew} />
+            <Route exact path="/cigars/:id" component={CigarShow} />
+            <Route exact path="/cigars" component={CigarIndex} />
+            <Route exact path="/login" component={Login} /> */}
+        </Switch>
+      </main>
+    </BrowserRouter>
   )
 }
 

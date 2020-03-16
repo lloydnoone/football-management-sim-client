@@ -4,6 +4,9 @@
   width: 100%;
 
   &__logo {
+    a { //Link component
+      text-decoration: none;
+    }
     margin: 10px;
     cursor: pointer;
   }
@@ -16,8 +19,14 @@
     & li {
       margin: 12px;
       cursor: pointer;
+
       i {
         margin-right: 5px;
+      }
+
+      a {
+        text-decoration: none;
+        color: $color-white;
       }
     }
 
@@ -25,6 +34,7 @@
       background-color: $color-teal;
       padding: 10px 30px;
       border-radius: 25px;
+
       &:hover {
         color: $color-white;
         background-color: $color-teal-dark;

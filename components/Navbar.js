@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link, withRouter } from 'react-router-dom'
 
 function Navbar() {
   return (
     <nav className='navbar'>
       <div className='navbar__left'>
         <div className='navbar__logo'>
-          <a><h2>Squadron</h2></a>
+          <Link to='/'><h2>Squadron</h2></Link>
         </div>
         <ul className='navbar__links'>
           <li><a><i className="fas fa-users"></i>Members</a></li>
@@ -28,7 +29,7 @@ function Navbar() {
         <div className='navbar__login-signup'>
           <ul className='navbar__links'>
             <li><a>Sign in</a></li>
-            <li ><a className='navbar__links__signup'>Sign up</a></li>
+            <li ><Link to='/register' className='navbar__links__signup'>Sign up</Link></li>
           </ul>
         </div>
       </div>
@@ -36,4 +37,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default withRouter(Navbar)

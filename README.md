@@ -1,3 +1,4 @@
-Navbar
 Landing
 Members
+Footer
+
