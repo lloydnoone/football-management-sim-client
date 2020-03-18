@@ -9,14 +9,18 @@ function Navbar() {
           <Link to='/'><h2>Squadron</h2></Link>
         </div>
         <ul className='navbar__links'>
-          <li><a><i className="fas fa-users"></i>Members</a></li>
-          <li><a><i className="fas fa-file-medical-alt"></i>Activity</a></li>
-          <li><a><i className="fas fa-comment-alt"></i>Forums</a></li>
-          <li><a><i className="fas fa-user-tag"></i>Market</a></li>
-          <li><a><i className="fas fa-futbol"></i>Leagues</a></li>
-          <li><a><i className="fas fa-play-circle"></i>Video</a></li>
-          <li><a><i className="far fa-newspaper"></i>News</a></li>
-          <li><a><i className="fas fa-sign-in-alt"></i>Log In</a></li>
+          <li><a><i className="fas fa-users navbar__links__link"></i>Members</a></li>
+          <li><a><i className="fas fa-file-medical-alt navbar__links__link"></i>Activity</a></li>
+          <li><a><i className="fas fa-comment-alt navbar__links__link"></i>Forums</a></li>
+          <li><a><i className="fas fa-user-tag navbar__links__link"></i>Market</a></li>
+          <li><a><i className="fas fa-futbol navbar__links__link"></i>Leagues</a></li>
+          <li><a><i className="fas fa-play-circle navbar__links__link"></i>Video</a></li>
+          <li><a><i className="far fa-newspaper navbar__links__link"></i>News</a></li>
+          <li>
+            <Link to='/login' className='navbar__links__link'>
+              <i className="fas fa-sign-in-alt"></i>Log In
+            </Link>
+          </li>
         </ul>
       </div>
       <div className='navbar__right'>
@@ -29,7 +33,11 @@ function Navbar() {
         <div className='navbar__login-signup'>
           <ul className='navbar__links'>
             <li><a>Sign in</a></li>
-            <li ><Link to='/register' className='navbar__links__signup'>Sign up</Link></li>
+            <li>
+              <Link to='/register' className='btn'>
+                <span>Sign up</span>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

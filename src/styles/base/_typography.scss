@@ -24,7 +24,13 @@ body {
     font-style: normal;
     font-size: 1.4rem;
 
-    & li:hover {
+    
+
+    &__link:visited {
+        color: $color-white;
+    }
+
+    &__link:hover {
       color: $color-hover-blue;
     }
   }
@@ -39,12 +45,9 @@ body {
 
   &__link {
     font-weight: 400;
-    &__highlight {
-      color: $color-teal;
-    }
   }
 
-  label {
+  label, input, select {
     font-size: 1.3rem;
     font-weight: 400;
   }
@@ -59,4 +62,9 @@ body {
   font-style: normal;
   font-size: 1.4rem;
   margin: 5px;
+}
+
+.smallPrint {
+  margin: 10px;
+  font-size: 1.2rem;
 }

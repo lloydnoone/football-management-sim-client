@@ -11,7 +11,6 @@ function Register(props) {
   function handleChange(e) {
     const data = { ...formData, [e.target.name]: e.target.value }
     setFormData(data)
-    console.log(formData, userType)
   }
 
   function handlePlayerChange(e) {
@@ -27,14 +26,12 @@ function Register(props) {
       } 
     }
     setFormData(data)
-    console.log(formData, userType)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
     axios.post('/api/register', formData)
       .then((res) => {
-        console.log(res)
         LocalAuth.setToken(res.data.token)
         props.history.push('/')
       })
@@ -42,10 +39,6 @@ function Register(props) {
         console.log(err.response.data.errors)
         setErrors([...Object.values(err.response.data.errors)])
       })
-  }
-
-  function log(log) {
-    console.log(log)
   }
 
   function setTypeDefaults(type) {
@@ -63,7 +56,7 @@ function Register(props) {
           <div className='formWrapper__header'>
             <h2 className='formWrapper__h2'>Create an Account</h2>
             <p className='formWrapper__link'>or 
-              <span className='formWrapper__link__highlight'> sign in</span>
+              <span className='u-highlight'> sign in</span>
             </p>
           </div>
           
@@ -240,6 +233,12 @@ function Register(props) {
             type='password'
             onChange={handleChange}
           />
+          <p className='smallPrint'>
+            By creating an account you are agreeing to the 
+            <span className='u-highlight'> Terms of Service </span> 
+            and
+            <span className='u-highlight'> Privacy Policy. </span>
+          </p>
           <button type='submit' className='btn'>Create Account</button>
         </form>
       </div>

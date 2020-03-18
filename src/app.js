@@ -6,6 +6,7 @@ import axios from 'axios'
 import Navbar from '../components/Navbar'
 import Home from '../views/Home'
 import Register from '../views/authViews/Register'
+import Login from '../views/authViews/Login'
 
 import './styles/main.scss'
 
@@ -28,11 +29,11 @@ function App() {
         <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
           {/* <Route exact path="/cigars/:id/edit" component={CigarEdit} />
             <Route exact path="/cigars/new" component={CigarNew} />
             <Route exact path="/cigars/:id" component={CigarShow} />
-            <Route exact path="/cigars" component={CigarIndex} />
-            <Route exact path="/login" component={Login} /> */}
+            <Route exact path="/cigars" component={CigarIndex} />*/}
         </Switch>
       </main>
     </BrowserRouter>
