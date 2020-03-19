@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import LocalAuth from '../../lib/localAuth'
 
@@ -10,20 +11,18 @@ function Login(props) {
   function handleChange(e) {
     const data = { ...formData, [e.target.name]: e.target.value }
     setFormData(data)
-    console.log(formData)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
     axios.post('/api/login', formData)
       .then((res) => {
-        console.log(res)
         LocalAuth.setToken(res.data.token)
         props.history.push('/')
       })
       .catch(err => {
         console.log('response data', err.response.data.message)
-        setErrors([Object.values(err.response.data.message)])
+        setErrors([err.response.data])
       })
   }
 
@@ -34,7 +33,7 @@ function Login(props) {
           <div className='formWrapper__header'>
             <h2 className='formWrapper__h2'>Login</h2>
             <p className='formWrapper__link'>or 
-              <span className='u-highlight'> Create an Account </span>
+              <Link to='/register' className='u-highlight'> Create an Account </Link>
             </p>
           </div>
           
@@ -51,7 +50,7 @@ function Login(props) {
             type='password'
             onChange={handleChange}
           />
-
+          {errors && errors.map(err => <p key={ err.message } className='u-validationError'>{ err.message }</p>)}
           <p className='smallPrint'>
             By creating an account you are agreeing to the 
             <span className='u-highlight'> Terms of Service </span> 
@@ -61,14 +60,8 @@ function Login(props) {
           <button type='submit' className='btn'>Login</button>
         </form>
       </div>
-      {errors && 
-        errors.map(err => {
-          console.log('mapped error: ', err.message)
-          return <p key={ err.message }>{ err.message }</p>
-        })
-      }
     </div>
   )
 }
 
-export default Login
+export default withRouter(Login)

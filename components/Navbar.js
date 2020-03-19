@@ -9,7 +9,12 @@ function Navbar() {
           <Link to='/'><h2>Squadron</h2></Link>
         </div>
         <ul className='navbar__links'>
-          <li><a><i className="fas fa-users navbar__links__link"></i>Members</a></li>
+          <li>
+            <Link to='/members' className='navbar__links__link'>
+              <i className="fas fa-users"></i>
+              Members
+            </Link>
+          </li>
           <li><a><i className="fas fa-file-medical-alt navbar__links__link"></i>Activity</a></li>
           <li><a><i className="fas fa-comment-alt navbar__links__link"></i>Forums</a></li>
           <li><a><i className="fas fa-user-tag navbar__links__link"></i>Market</a></li>

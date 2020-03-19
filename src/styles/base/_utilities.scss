@@ -3,4 +3,10 @@
 .u-margin-bottom-small { margin-bottom: 1.5rem; }
 .u-margin-bottom-medium { margin-bottom: 4rem; }
 .u-margin-bottom-big { margin-bottom: 8rem; }
-.u-highlight { color: $color-teal; }
+
+.u-highlight { 
+  color: $color-teal; 
+  cursor: pointer; 
+  text-decoration: none;
+}
+.u-validationError { color: $color-error; font-size: 1.2rem; }

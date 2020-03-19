@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import LocalAuth from '../../lib/localAuth'
 
@@ -6,7 +7,8 @@ function Register(props) {
 
   const [formData, setFormData] = useState({})
   const [userType, setUserType] = useState('')
-  const [errors, setErrors] = useState([])
+  const [errors, setErrors] = useState({})
+  const [playerHide, setPlayerHide] = useState(false)
 
   function handleChange(e) {
     const data = { ...formData, [e.target.name]: e.target.value }
@@ -30,15 +32,30 @@ function Register(props) {
 
   function handleSubmit(e) {
     e.preventDefault()
+    if (!validateUserType()) return
     axios.post('/api/register', formData)
       .then((res) => {
         LocalAuth.setToken(res.data.token)
         props.history.push('/')
       })
       .catch(err => {
-        console.log(err.response.data.errors)
-        setErrors([...Object.values(err.response.data.errors)])
+        console.log(err.response.data)
+        setErrors(err.response.data.errors)
       })
+  }
+
+  function validateUserType() {
+    if (userType === '') {
+      setErrors({ userType: true })
+      console.log(errors)
+      return false
+    } else {
+      return true
+    }
+  }
+
+  function togglePlayerForm() {
+    setPlayerHide(true)
   }
 
   function setTypeDefaults(type) {
@@ -56,7 +73,7 @@ function Register(props) {
           <div className='formWrapper__header'>
             <h2 className='formWrapper__h2'>Create an Account</h2>
             <p className='formWrapper__link'>or 
-              <span className='u-highlight'> sign in</span>
+              <Link to='/login' className='u-highlight'> sign in</Link>
             </p>
           </div>
           
@@ -66,24 +83,31 @@ function Register(props) {
             placeholder='First Name'
             onChange={handleChange}
           />
+          {errors && errors.firstName && <p className='u-validationError'>First name is required. </p>}
           <label>Last Name</label>
           <input
             name='lastName'
             placeholder='Last Name'
             onChange={handleChange}
           />
+          {errors && errors.lastName && <p className='u-validationError'>Last name is required. </p>}
           <label>Username</label>
           <input
             name='username'
             placeholder='Username'
             onChange={handleChange}
           />
+          {errors && errors.username && <p className='u-validationError'>username is required. </p>}
           <label>Gender</label>
-          <input
+          <select
             name='gender'
-            placeholder='Gender'
             onChange={handleChange}
-          />
+          >
+            <option value=''>---</option>
+            <option value='male'>Male</option>
+            <option value='agent'>Female</option>
+            <option value='dont assume my gender!!'>dont assume my gender!!</option>
+          </select>
           <label>Nationality</label>
           <input
             name='nationality'
@@ -96,6 +120,7 @@ function Register(props) {
             placeholder='name@email.com'
             onChange={handleChange}
           />
+          {errors && errors.email && <p className='u-validationError'>Email is required. </p>}
           <label>Are you a player, agent or club official?</label>
           <select
             name='userType'
@@ -106,8 +131,17 @@ function Register(props) {
             <option value='agent'>Agent</option>
             <option value='official'>Club Official</option>
           </select>
-          {userType === 'player' && setTypeDefaults(userType) &&
+          {errors && errors.userType && <p className='u-validationError'> You must choose a profile. </p>}
+          {userType === 'agent' && setTypeDefaults(userType)}
+          {userType === 'official' && setTypeDefaults(userType)}
+          {userType === 'player' && setTypeDefaults(userType) && !playerHide &&
             <>
+              <p 
+                className='formWrapper__link u-highlight' 
+                onClick={() => togglePlayerForm()}
+              >
+                Fill player info later?
+              </p>
               <label>Position</label>
               <select
                 name='position'
@@ -217,8 +251,12 @@ function Register(props) {
               />
             </>
           }
-          {userType === 'agent' && setTypeDefaults(userType)}
-          {userType === 'official' && setTypeDefaults(userType)}
+          <label>Image URL</label>
+          <input
+            name='imageUrl'
+            placeholder='image URL'
+            onChange={handleChange}
+          />
           <label>Password</label>
           <input
             name='password'
@@ -226,6 +264,7 @@ function Register(props) {
             type='password'
             onChange={handleChange}
           />
+          {errors && errors.passwordConfirmation && <p className='u-validationError'>Passwords do not match. </p>}
           <label>Password Confirmation</label>
           <input
             name='passwordConfirmation'
@@ -242,14 +281,8 @@ function Register(props) {
           <button type='submit' className='btn'>Create Account</button>
         </form>
       </div>
-      {errors && 
-        errors.map(err => {
-          console.log('mapped error: ', err)
-          return <p key={ err.message }>{ err.message }</p>
-        })
-      }
     </div>
   )
 }
 
-export default Register
+export default withRouter(Register)
