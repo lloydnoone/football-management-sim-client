@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar'
 import Home from '../views/Home'
 import Register from '../views/authViews/Register'
 import Login from '../views/authViews/Login'
-import Members from '../views/members'
+import Members from '../views/Members'
 
 import './styles/main.scss'
 
