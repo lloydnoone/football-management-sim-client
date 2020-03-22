@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import LocalAuth from '../../lib/localAuth'
+import useToggle from '../../hooks/useToggle'
 
 function Register(props) {
 
   const [formData, setFormData] = useState({})
   const [userType, setUserType] = useState('')
   const [errors, setErrors] = useState({})
-  const [playerHide, setPlayerHide] = useState(false)
+  const [playerHide, togglePlayerHide] = useToggle(false)
 
   function handleChange(e) {
     const data = { ...formData, [e.target.name]: e.target.value }
@@ -18,7 +19,7 @@ function Register(props) {
   function handlePlayerChange(e) {
     let { value } = e.target
     const { name } = e.target
-
+    //allow null values
     if (value === 'None') value = null
     const data = { 
       ...formData, 
@@ -52,10 +53,6 @@ function Register(props) {
     } else {
       return true
     }
-  }
-
-  function togglePlayerForm() {
-    setPlayerHide(true)
   }
 
   function setTypeDefaults(type) {
@@ -138,7 +135,7 @@ function Register(props) {
             <>
               <p 
                 className='formWrapper__link u-highlight' 
-                onClick={() => togglePlayerForm()}
+                onClick={() => togglePlayerHide()}
               >
                 Fill player info later?
               </p>

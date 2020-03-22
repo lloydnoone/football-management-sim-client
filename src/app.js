@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import axios from 'axios'
 
 import Navbar from '../components/Navbar'
 import Home from '../views/Home'
@@ -12,17 +11,6 @@ import Members from '../views/Members'
 import './styles/main.scss'
 
 function App() {
-  const [userData, setUserData] = useState({})
-  useEffect(() => {
-    axios.get('api/users')
-      .then(res => setUserData(res.data))
-      .catch(err => console.log(err))
-  }, [])
-
-  useEffect(() => {
-    console.log(userData)
-  }, [userData])
-
   return (
     <BrowserRouter>
       <main>

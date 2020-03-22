@@ -10,3 +10,38 @@
   text-decoration: none;
 }
 .u-validationError { color: $color-error; font-size: 1.2rem; }
+
+.u-grid {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.u-list {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: no-wrap;
+
+  .members__display__list__member {
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 2px 0;
+
+    &__image {
+      width: 60px;
+      height: 60px;
+    }
+
+    &__info {
+      align-items: flex-start;
+      margin-left: 30px;
+
+
+    }
+    
+  }
+}

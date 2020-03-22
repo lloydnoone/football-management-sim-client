@@ -1,24 +1,17 @@
 import React, { useState } from 'react'
-import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import LocalAuth from '../../lib/localAuth'
-import useFormState from '../../hooks/useFormState'
 
-function Login(props) {
+function ConnectButton(props) {
 
-  //const [formData, setFormData] = useState({})
   const [errors, setErrors] = useState([])
-  const [formData, handleChange] = useFormState({})
 
-  // function handleChange(e) {
-  //   const data = { ...formData, [e.target.name]: e.target.value }
-  //   setFormData(data)
-  // }
-
-  function handleSubmit(e) {
+  function handleClick(e) {
     e.preventDefault()
-    axios.post('/api/login', formData)
+    
+    axios.post(`/api/connection-request/from/${}/to/${}`)
       .then((res) => {
+        
         LocalAuth.setToken(res.data.token)
         props.history.push('/')
       })
@@ -66,4 +59,4 @@ function Login(props) {
   )
 }
 
-export default withRouter(Login)
+export default ConnectButton
