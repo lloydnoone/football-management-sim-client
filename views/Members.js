@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import useToggle from '../hooks/useToggle'
+import useFormState from '../hooks/useFormState'
 
 function Members() {
   const [members, setMembers] = useState([])
   const [errors, setErrors] = useState({})
-  const [filterData, setFilterData] = useState({})
+  const [filterData, handleChange] = useFormState({ userType: 'allTypes', userOrder: 'recentlyActive' })
   const [grid, toggleGrid] = useToggle(true)
+
 
   useEffect(() => {
     axios.get('/api/users')
@@ -17,21 +19,12 @@ function Members() {
         console.log('response data', err.response.data.message)
         setErrors([err.response.data])
       })
-
-    // set initial filter values
-    setFilterData({ userType: 'allTypes', userOrder: 'recentlyActive' })
   }, [])
 
   function getMemberType(member) {
     if (member.playerData) return member.playerData.type
     if (member.agentData) return 'Agent'
     if (member.officialData) return 'Official'
-  }
-
-  function handleChange(e) {
-    const data = { ...filterData, [e.target.name]: e.target.value }
-    setFilterData(data)
-    console.log(filterData)
   }
 
   function sortMembers(a, b) {
@@ -109,6 +102,5 @@ function Members() {
     </main>
   )
 }
-
 
 export default Members
