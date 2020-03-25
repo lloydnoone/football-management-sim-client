@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import LocalAuth from '../../lib/localAuth'
 import useToggle from '../../hooks/useToggle'
+import { profileContext } from '../../contexts/profileContext'
 
 function Register(props) {
-
+  const { getProfile } = useContext(profileContext)
   const [formData, setFormData] = useState({})
   const [userType, setUserType] = useState('')
   const [errors, setErrors] = useState({})
@@ -37,6 +38,7 @@ function Register(props) {
     axios.post('/api/register', formData)
       .then((res) => {
         LocalAuth.setToken(res.data.token)
+        getProfile()
         props.history.push('/')
       })
       .catch(err => {

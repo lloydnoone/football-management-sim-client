@@ -1,62 +1,62 @@
-// import React, { useState } from 'react'
-// import axios from 'axios'
-// import LocalAuth from '../../lib/localAuth'
+import React, { useState, useContext, useEffect } from 'react'
+import axios from 'axios'
+import { profileContext } from '../contexts/profileContext'
 
-// function ConnectButton(props) {
+function ConnectButton(props) {
+  const { profile, getProfile } = useContext(profileContext)
+  const [errors, setErrors] = useState([])
+  const [requestStatus, setRequestStatus] = useState(false)
 
-//   const [errors, setErrors] = useState([])
+  useEffect(() => {
+    if (profile.sentRequests) setRequestStatus(profile.sentRequests.includes(props.memberId))
+  }, [profile])
 
-//   function handleClick(e) {
-//     e.preventDefault()
+  function handleClick(e) {
+    // if member already has sent request then delete it from user and member
+    e.preventDefault()
 
-//     axios.post(`/api/connection-request/from/${}/to/${}`)
-//       .then((res) => {
-        
-//         LocalAuth.setToken(res.data.token)
-//         props.history.push('/')
-//       })
-//       .catch(err => {
-//         console.log('response data', err.response.data.message)
-//         setErrors([err.response.data])
-//       })
-//   }
+    if (!requestStatus) {
+      axios.post(`/api/connection-request/from/${profile._id}/to/${props.memberId}`)
+        .then(res => {
+          console.log('data from friend request: ', res.data)
+          //update profile
+          getProfile()
+        })
+        .then(() => {
+          setRequestStatus(profile.sentRequests.includes(props.memberId))
+        })
+        .catch(err => {
+          console.log('err in send request', err.response.data.message)
+          setErrors([err.response.data])
+        })
+    } else {
+      axios.delete(`/api/connection-request/from/${profile._id}/to/${props.memberId}`)
+        .then((res) => {
+          console.log('data from friend request: ', res.data)
+          //update profile
+          getProfile()
+        })
+        .then(() => {
+          setRequestStatus(profile.sentRequests.includes(props.memberId))
+        })
+        .catch(err => {
+          console.log('err in delete request: ', err.response.data.message)
+          setErrors([err.response.data])
+        })
+    }
+    
+  }
 
-//   return (
-//     <div className='login'>
-//       <div className='panelWrapper'>
-//         <form className='formWrapper' onSubmit={handleSubmit}>
-//           <div className='formWrapper__header'>
-//             <h2 className='formWrapper__h2'>Login</h2>
-//             <p className='formWrapper__link'>or 
-//               <Link to='/register' className='u-highlight'> Create an Account </Link>
-//             </p>
-//           </div>
-          
-//           <label>Email</label>
-//           <input
-//             name='email'
-//             placeholder='name@email.com'
-//             onChange={handleChange}
-//           />
-//           <label>Password</label>
-//           <input
-//             name='password'
-//             placeholder='Password'
-//             type='password'
-//             onChange={handleChange}
-//           />
-//           {errors && errors.map(err => <p key={ err.message } className='u-validationError'>{ err.message }</p>)}
-//           <p className='smallPrint'>
-//             By creating an account you are agreeing to the 
-//             <span className='u-highlight'> Terms of Service </span> 
-//             and
-//             <span className='u-highlight'> Privacy Policy. </span>
-//           </p>
-//           <button type='submit' className='btn'>Login</button>
-//         </form>
-//       </div>
-//     </div>
-//   )
-// }
+  return (
+    <div className='connectBtn' onClick={handleClick}>
+      {profile.sentRequests && !requestStatus ? 
+        <i className="fas fa-user-plus"></i> 
+        : 
+        <i className="fas fa-user-times"></i>
+      }
+      {errors && errors.map(err => <p key={ err.message } className='u-validationError'>{ err.message }</p>)}
+    </div>
+  )
+}
 
-// export default ConnectButton
+export default ConnectButton

@@ -4,6 +4,10 @@
   padding: 10px;
 }
 
+.members--split {
+  display: flex;
+}
+
 .members__display {
   width: 80vw;
 
@@ -65,6 +69,15 @@
       font-size: 3rem;
       line-height: 3.5rem;
     }
+  }
+}
+
+.member__search {
+  display: flex;
+  flex-direction: column;
+
+  .formWrapper {
+    min-width: 300px;
   }
 }
 

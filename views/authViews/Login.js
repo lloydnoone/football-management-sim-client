@@ -1,25 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import LocalAuth from '../../lib/localAuth'
 import useFormState from '../../hooks/useFormState'
+import { profileContext } from '../../contexts/profileContext'
 
 function Login(props) {
-
-  //const [formData, setFormData] = useState({})
+  const { getProfile } = useContext(profileContext)
   const [errors, setErrors] = useState([])
   const [formData, handleChange] = useFormState({})
-
-  // function handleChange(e) {
-  //   const data = { ...formData, [e.target.name]: e.target.value }
-  //   setFormData(data)
-  // }
 
   function handleSubmit(e) {
     e.preventDefault()
     axios.post('/api/login', formData)
       .then((res) => {
         LocalAuth.setToken(res.data.token)
+        getProfile()
         props.history.push('/')
       })
       .catch(err => {

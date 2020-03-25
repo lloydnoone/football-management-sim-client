@@ -7,6 +7,7 @@ import Home from '../views/Home'
 import Register from '../views/authViews/Register'
 import Login from '../views/authViews/Login'
 import Members from '../views/Members'
+import { ProfileProvider } from '../contexts/profileContext'
 
 import './styles/main.scss'
 
@@ -14,17 +15,19 @@ function App() {
   return (
     <BrowserRouter>
       <main>
-        <Navbar />
-        <Switch>
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/members" component={Members} />
-          {/* <Route exact path="/cigars/:id/edit" component={CigarEdit} />
+        <ProfileProvider>
+          <Navbar />
+          <Switch>
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/members" component={Members} />
+            {/* <Route exact path="/cigars/:id/edit" component={CigarEdit} />
             <Route exact path="/cigars/new" component={CigarNew} />
             <Route exact path="/cigars/:id" component={CigarShow} />
             <Route exact path="/cigars" component={CigarIndex} />*/}
-        </Switch>
+          </Switch>
+        </ProfileProvider>
       </main>
     </BrowserRouter>
   )
