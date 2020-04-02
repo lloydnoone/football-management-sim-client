@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 import { profileContext } from '../contexts/profileContext'
+import LocalAuth from '../lib/localAuth'
 
 function ConnectButton(props) {
   const { profile, getProfile } = useContext(profileContext)
@@ -49,10 +50,14 @@ function ConnectButton(props) {
 
   return (
     <div className='connectBtn' onClick={handleClick}>
-      {profile.sentRequests && !requestStatus ? 
-        <i className="fas fa-user-plus"></i> 
-        : 
-        <i className="fas fa-user-times"></i>
+      {profile.sentRequests && LocalAuth.isAuthenticated() && 
+        <>
+          {!requestStatus ? 
+            <i className="fas fa-user-plus"></i> 
+            : 
+            <i className="fas fa-user-times"></i>
+          }
+        </>
       }
       {errors && errors.map(err => <p key={ err.message } className='u-validationError'>{ err.message }</p>)}
     </div>
