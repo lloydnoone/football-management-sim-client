@@ -37,17 +37,6 @@ function Members() {
     if (filterData.userOrder === 'alphabetical') return a.firstName.localeCompare(b.firstName)
   }
 
-   // (
-        //   (
-        //     ((playerData.position === searchParams.position) || (searchParams.position === null || '')) &&
-        //     ((member.nationality === searchParams.nationality) || (searchParams.nationality === null || '')) &&
-        //     ((playerData.league === searchParams.league) || (searchParams.league === null || ''))
-        // // check for partial matches in fields
-        // //RegExp(searchParams.firstName).test(member.firstName)
-
-        //   )
-        // ) 
-
   function filterMembers() {
     //check if user has entered search data if not return unfiltered
     if (Object.values(searchParams).every(val => val === undefined || val === '')) return members
@@ -60,23 +49,23 @@ function Members() {
         if (searchParams.age !== undefined) searchParams.age = Number(searchParams.age)
         //filter using search parameters
         for (const key in searchParams) {
-          // parameter is false then dont filter by it
-          if (searchParams[key] === undefined || searchParams[key] === '') return true
-          // regex for name search
-          if (searchParams[key] === 'firstName' || searchParams[key] === 'firstName') {
-            console.log('searchParams[key]: ', searchParams[key])
-            console.log('member[key]: ', member[key])
-            return RegExp(searchParams[key]).test(member[key])
+          // parameter is empty then dont filter by it
+          if (searchParams[key] === undefined || searchParams[key] === '') {
+            //do nothing
+          } else {
+            // regex for name search
+            if (key === 'firstName' || key === 'lastName') {
+              return member[key].startsWith(searchParams[key])
+            }
+            // filter by generic user data
+            if (member[key] && member[key] !== searchParams[key]) return false
+            //discern if player data or not
+            if (playerData && playerData[key] && playerData[key] !== searchParams[key]) return false
           }
-          // filter by generic user data
-          if (member[key] && member[key] !== searchParams[key]) return false
-          //discern if player data or not
-          if (playerData && playerData[key] && playerData[key] !== searchParams[key]) return false //causing error
         }
         return true
       })
   }
-
 
   return (
     <div className='members--split'>
@@ -149,56 +138,71 @@ function Members() {
       <div className='member__search panelWrapper'>
         <h1>Search</h1>
         <form className='formWrapper'>
-          {console.log(searchParams)}
-          <label>Position</label>
+          <label>Player, Agent or Official?</label>
           <select
-            name='position'
-            placeholder='Position'
+            name='userType'
             onChange={handleSearchChange}
           >
-            <option value='defender'>Defender</option>
-            <option value='centre back'>Centre back</option>
-            <option value='sweeper'>Sweeper</option>
-            <option value='full back'>Full back</option>
-            <option value='wing back'>Wing back</option>
-            <option value='midfield'>Midfield</option>
-            <option value='centre midfield'>Centre midfield</option>
-            <option value='defensive midfield'>Defensive midfield</option>
-            <option value='attacking midfield'>Attacking midfield</option>
-            <option value='wide midfield'>Wide midfield</option>
-            <option value='striker'>Striker</option>
-            <option value='centre forward'>Centre forward</option>
-            <option value='second striker'>Second striker</option>
-            <option value='winger'>Winger</option>
+            <option value=''>---</option>
+            <option value='player'>Player</option>
+            <option value='agent'>Agent</option>
+            <option value='official'>Official</option>
           </select>
-          <label>Nationality</label>
-          <select
-            name='nationality'
-            placeholder='Nationality'
-            onChange={handleSearchChange}
-          >
-            {nationalites.map(nat => {
-              return (
-                <option key={nat} value={nat[0].toLowerCase() + nat.slice(1)}>{nat}</option>
-              )
-            })}
-          </select>
-          <label>League</label>
-          <select
-            name='league'
-            onChange={handleSearchChange}
-          >
-            <option value='None'>---</option>
-            <option value='None'>None</option>
-            <option value='Premier League'>Premier League</option>
-            <option value='Champions League'>Champions League</option>
-          </select>
+          {searchParams.userType === 'player' &&
+            <>
+              <label>Position</label>
+              <select
+                name='position'
+                placeholder='Position'
+                onChange={handleSearchChange}
+              >
+                <option value=''>---</option>
+                <option value='defender'>Defender</option>
+                <option value='centre back'>Centre back</option>
+                <option value='sweeper'>Sweeper</option>
+                <option value='full back'>Full back</option>
+                <option value='wing back'>Wing back</option>
+                <option value='midfield'>Midfield</option>
+                <option value='centre midfield'>Centre midfield</option>
+                <option value='defensive midfield'>Defensive midfield</option>
+                <option value='attacking midfield'>Attacking midfield</option>
+                <option value='wide midfield'>Wide midfield</option>
+                <option value='striker'>Striker</option>
+                <option value='centre forward'>Centre forward</option>
+                <option value='second striker'>Second striker</option>
+                <option value='winger'>Winger</option>
+              </select>
+              <label>League</label>
+              <select
+                name='league'
+                onChange={handleSearchChange}
+              >
+                <option value='None'>---</option>
+                <option value='None'>None</option>
+                <option value='Premier League'>Premier League</option>
+                <option value='Champions League'>Champions League</option>
+              </select>
+            </>
+          }
           <label>Age</label>
           <input
             name='age'
             placeholder='Age'
             onChange={handleSearchChange}
           />
+          <label>Nationality</label>
+          <select
+            name='nationality'
+            placeholder='Nationality'
+            onChange={handleSearchChange}
+          >
+            <option key='blankNat' value=''>---</option>
+            {nationalites.map(nat => {
+              return (
+                <option key={nat} value={nat[0].toLowerCase() + nat.slice(1)}>{nat}</option>
+              )
+            })}
+          </select>
           <label>First Name</label>
           <input
             name='firstName'

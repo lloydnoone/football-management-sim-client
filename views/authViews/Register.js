@@ -5,6 +5,8 @@ import LocalAuth from '../../lib/localAuth'
 import useToggle from '../../hooks/useToggle'
 import { profileContext } from '../../contexts/profileContext'
 
+import nationalites from '../../data/nationalities.json'
+
 function Register(props) {
   const { getProfile } = useContext(profileContext)
   const [formData, setFormData] = useState({})
@@ -108,11 +110,18 @@ function Register(props) {
             <option value='dont assume my gender!!'>dont assume my gender!!</option>
           </select>
           <label>Nationality</label>
-          <input
+          <select
             name='nationality'
             placeholder='Nationality'
             onChange={handleChange}
-          />
+          >
+            <option key='blankNat' value=''>---</option>
+            {nationalites.map(nat => {
+              return (
+                <option key={nat} value={nat[0].toLowerCase() + nat.slice(1)}>{nat}</option>
+              )
+            })}
+          </select>
           <label>Email</label>
           <input
             name='email'
@@ -123,7 +132,10 @@ function Register(props) {
           <label>Are you a player, agent or club official?</label>
           <select
             name='userType'
-            onChange={(e) => setUserType(e.target.value)}
+            onChange={(e) => {
+              handleChange(e)
+              setUserType(e.target.value)
+            }}
           >
             <option value=''>---</option>
             <option value='player'>Player</option>
@@ -147,20 +159,20 @@ function Register(props) {
                 placeholder='Position'
                 onChange={handlePlayerChange}
               >
-                <option value='Defender'>Defender</option>
-                <option value='Centre back'>Centre back</option>
-                <option value='Sweeper'>Sweeper</option>
-                <option value='Full back'>Full back</option>
-                <option value='Wing back'>Wing back</option>
-                <option value='Midfield'>Midfield</option>
-                <option value='Centre midfield'>Centre midfield</option>
-                <option value='Defensive midfield'>Defensive midfield</option>
-                <option value='Attacking midfield'>Attacking midfield</option>
-                <option value='Wide midfield'>Wide midfield</option>
-                <option value='Striker'>Striker</option>
-                <option value='Centre forward'>Centre forward</option>
-                <option value='Second striker'>Second striker</option>
-                <option value='Winger'>Winger</option>
+                <option value='defender'>Defender</option>
+                <option value='centreBack'>Centre back</option>
+                <option value='sweeper'>Sweeper</option>
+                <option value='fullBack'>Full back</option>
+                <option value='wingBack'>Wing back</option>
+                <option value='midfield'>Midfield</option>
+                <option value='centreMidfield'>Centre midfield</option>
+                <option value='defensiveMidfield'>Defensive midfield</option>
+                <option value='attackingMidfield'>Attacking midfield</option>
+                <option value='wideMidfield'>Wide midfield</option>
+                <option value='striker'>Striker</option>
+                <option value='centreForward'>Centre forward</option>
+                <option value='secondStriker'>Second striker</option>
+                <option value='winger'>Winger</option>
               </select>
               <label>Height</label>
               <input
