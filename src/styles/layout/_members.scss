@@ -75,9 +75,10 @@
 .member__search {
   display: flex;
   flex-direction: column;
+  width: 100%;
 
   .formWrapper {
-    min-width: 300px;
+    min-width: 0;
   }
 }
 
