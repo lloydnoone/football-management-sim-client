@@ -7,7 +7,6 @@ function MemberSearch(props) {
 
   return (
     <div className='member__search panelWrapper'>
-      {console.log(props)}
       <h1>Search</h1>
       <form className='formWrapper'>
         <label>Player, Agent or Official?</label>

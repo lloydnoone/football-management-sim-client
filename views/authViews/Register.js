@@ -240,7 +240,7 @@ function Register(props) {
               >
                 <option value='semi-professional'>semi-professional</option>
                 <option value='professional'>professional</option>
-                <option value='Amateur'>Amateur</option>
+                <option value='amateur'>Amateur</option>
               </select>
               <label>Price</label>
               <input
