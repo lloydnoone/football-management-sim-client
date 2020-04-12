@@ -9,6 +9,7 @@ module.exports = {
     path: path.resolve('dist'),
     publicPath: '/'
   },
+  devtool: 'source-map',
   module: {
     rules: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },

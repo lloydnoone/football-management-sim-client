@@ -1,7 +1,18 @@
 Navbar
 
+remove age filter for agents
+view profile
+
+
+
+
+
+
+
+
+
+
+
 search func
-current page logo color
 tool tip class
 
-view profile

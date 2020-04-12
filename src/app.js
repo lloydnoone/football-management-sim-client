@@ -4,9 +4,11 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import Navbar from '../components/Navbar'
 import Home from '../views/Home'
+import Members from '../views/MemberViews/Members'
+import MemberShow from '../views/MemberViews/MemberShow'
 import Register from '../views/authViews/Register'
 import Login from '../views/authViews/Login'
-import Members from '../views/Members'
+
 import { ProfileProvider } from '../contexts/profileContext'
 
 import './styles/main.scss'
@@ -22,9 +24,9 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/members" component={Members} />
+            <Route exact path="/members/:id" component={MemberShow} />
             {/* <Route exact path="/cigars/:id/edit" component={CigarEdit} />
             <Route exact path="/cigars/new" component={CigarNew} />
-            <Route exact path="/cigars/:id" component={CigarShow} />
             <Route exact path="/cigars" component={CigarIndex} />*/}
           </Switch>
         </ProfileProvider>

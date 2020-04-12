@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import useToggle from '../hooks/useToggle'
-import useFormState from '../hooks/useFormState'
+import useToggle from '../../hooks/useToggle'
+import useFormState from '../../hooks/useFormState'
 
-import ConnectButton from '../components/ConnectButton'
-import MemberSearch from '../components/MemberSearch'
-//import nationalites from '../data/nationalities.json'
+import MemberCard from '../../components/MemberCard'
+import MemberSearch from '../../components/MemberSearch'
 
 function Members() {
   const [members, setMembers] = useState([])
@@ -24,12 +23,6 @@ function Members() {
         setErrors([err.response.data])
       })
   }, [])
-
-  function getMemberType(member) {
-    if (member.playerData) return member.playerData.type
-    if (member.agentData) return 'Agent'
-    if (member.officialData) return 'Official'
-  }
 
   function sortMembers(a, b) {
     if (filterData.userOrder === 'recentlyActive') return a.lastActivity - b.lastActivity
@@ -107,27 +100,11 @@ function Members() {
             className={`members__display__list ${grid === true ? 'u-grid' : 'u-list'}`}
           >
             {members && filterMembers()//members
-              .filter(member => ((getMemberType(member) === filterData.userType) || filterData.userType === 'allTypes'))
+              .filter(member => (member.userType === filterData.userType) || filterData.userType === 'allTypes')
               .sort((a, b) => sortMembers(a, b))
               .map(member => {
                 return (
-                  <div className='panelWrapper members__display__list__member' key={member._id}>
-                    <img
-                      className='members__display__list__member__image'
-                      src={member.imageUrl}
-                    />
-                    <div className='members__display__list__member__info'>
-                      <p className='u-highlight members__display__list__member__info__name'>
-                        {member.firstName} {member.lastName}
-                      </p>
-                      <p className='members__display__list__member__info__type'>
-                        {getMemberType(member)}
-                      </p>
-                    </div>
-                    <div className='members__display__list__member__connect'>
-                      <ConnectButton memberId={member._id} name={member.firstName} />
-                    </div>
-                  </div>
+                  <MemberCard key={member._id} { ...member } />
                 )
               })}
           </div>
@@ -136,7 +113,6 @@ function Members() {
           {errors && errors.map(err => <p key={ err.message } className='u-validationError'>{ err.message }</p>)}
         </div>
       </div>
-      {console.log(searchParams)}
       <MemberSearch 
         searchParams={searchParams}
         handleSearchChange={handleSearchChange} 

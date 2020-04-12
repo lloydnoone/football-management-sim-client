@@ -1,19 +1,15 @@
-import React, { useContext, useEffect } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 import LocalAuth from '../lib/localAuth'
 import { profileContext } from '../contexts/profileContext'
 
 function Navbar() {
-  const { profile, getProfile } = useContext(profileContext)
-
-  useEffect(() => {
-    
-  },[])
+  const { profile } = useContext(profileContext)
+  const { pathname } = useLocation()
 
   return (
     <nav className='navbar'>
-      {console.log(profile)}
       <div className='navbar__left'>
         <div className='navbar__logo'>
           <Link to='/'><h2>Squadron</h2></Link>
@@ -21,20 +17,82 @@ function Navbar() {
         <ul className='navbar__links'>
           <li>
             <Link to='/members' className='navbar__links__link'>
-              <i className="fas fa-users"></i>
+              <i 
+                className={`
+              fas fa-users
+              ${pathname === '/members' ? 'u-color-visitedblue' : ''}`}></i>
               Members
             </Link>
           </li>
-          <li><a><i className="fas fa-file-medical-alt navbar__links__link"></i>Activity</a></li>
-          <li><a><i className="fas fa-comment-alt navbar__links__link"></i>Forums</a></li>
-          <li><a><i className="fas fa-user-tag navbar__links__link"></i>Market</a></li>
-          <li><a><i className="fas fa-futbol navbar__links__link"></i>Leagues</a></li>
-          <li><a><i className="fas fa-play-circle navbar__links__link"></i>Video</a></li>
-          <li><a><i className="far fa-newspaper navbar__links__link"></i>News</a></li>
+          <li>
+            <a>
+              <i
+                className={`
+              fas fa-file-medical-alt navbar__links__link
+              ${pathname === '/activity' ? 'u-color-visitedblue' : ''}`}
+              >
+              </i>Activity
+            </a>
+          </li>
+          <li>
+            <a>
+              <i 
+                className={`
+              fas fa-comment-alt navbar__links__link
+              ${pathname === '/forums' ? 'u-color-visitedblue' : ''}`}
+              >
+              </i>Forums
+            </a>
+          </li>
+          <li>
+            <a>
+              <i 
+                className={`
+              fas fa-user-tag navbar__links__link
+              ${pathname === '/Market' ? 'u-color-visitedblue' : ''}`}
+              >
+              </i>Market
+            </a>
+          </li>
+          <li>
+            <a>
+              <i 
+                className={`
+              fas fa-futbol navbar__links__link
+              ${pathname === '/leagues' ? 'u-color-visitedblue' : ''}`}
+              >
+              </i>Leagues
+            </a>
+          </li>
+          <li>
+            <a>
+              <i 
+                className={`
+              fas fa-play-circle navbar__links__link
+              ${pathname === '/video' ? 'u-color-visitedblue' : ''}`}
+              >
+              </i>Video
+            </a>
+          </li>
+          <li>
+            <a>
+              <i 
+                className={`
+              far fa-newspaper navbar__links__link
+              ${pathname === '/news' ? 'u-color-visitedblue' : ''}`}
+              >
+              </i>News
+            </a>
+          </li>
           {!LocalAuth.isAuthenticated() &&
             <li>
               <Link to='/login' className='navbar__links__link'>
-                <i className="fas fa-sign-in-alt"></i>Log In
+                <i 
+                  className={`
+                    fas fa-sign-in-alt
+                    ${pathname === '/login' ? 'u-color-visitedblue' : ''}`}
+                >
+                </i>Log In
               </Link>
             </li>
           }
@@ -70,4 +128,4 @@ function Navbar() {
   )
 }
 
-export default withRouter(Navbar)
+export default Navbar
