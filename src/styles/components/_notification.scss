@@ -8,3 +8,14 @@
   font-size: 1.1rem;
   margin-left: 5px;
 }
+
+.notification-red {
+  @extend .notification;
+  background-color: $color-notification-red;
+}
+
+.notification-userType {
+  @extend .notification-red;
+  font-size: 1.4rem;
+  padding: 0 7px;
+}

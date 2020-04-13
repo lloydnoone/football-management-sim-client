@@ -120,3 +120,53 @@ h2 {
     font-size: 1.2rem;
   }
 }
+
+.memberShow__userInfo {
+  &__top {
+    &__header {
+      &__info {
+        &__nameAndType {
+          font-family: Roboto;
+          &__name {
+            font-weight: 700;
+            font-size: 3.5rem;
+            line-height: 4.5rem;
+            letter-spacing: -1px;
+          }
+          &__type {
+            font-weight: 600;
+          }
+        }
+
+        &__usernameAndDate {
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    font-family: Roboto;
+    
+    & h2 {
+      font-weight: 500;
+      border: none;
+      font-size: 2rem;
+      margin-left: 30px;
+      color: $color-teal;
+    }
+
+    & h3 {
+      font-weight: 400;
+      font-size: 1.8rem;
+      margin-left: 30px;
+      color: $color-teal;
+      margin: 20px 30px;
+    }
+
+    & ul li {
+      font-weight: 400;
+      font-size: 1.3rem;
+    }
+  }
+}

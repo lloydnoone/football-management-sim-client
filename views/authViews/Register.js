@@ -159,20 +159,20 @@ function Register(props) {
                 placeholder='Position'
                 onChange={handlePlayerChange}
               >
-                <option value='defender'>Defender</option>
-                <option value='centreBack'>Centre back</option>
-                <option value='sweeper'>Sweeper</option>
-                <option value='fullBack'>Full back</option>
-                <option value='wingBack'>Wing back</option>
-                <option value='midfield'>Midfield</option>
-                <option value='centreMidfield'>Centre midfield</option>
-                <option value='defensiveMidfield'>Defensive midfield</option>
-                <option value='attackingMidfield'>Attacking midfield</option>
-                <option value='wideMidfield'>Wide midfield</option>
-                <option value='striker'>Striker</option>
-                <option value='centreForward'>Centre forward</option>
-                <option value='secondStriker'>Second striker</option>
-                <option value='winger'>Winger</option>
+                <option value='Defender'>Defender</option>
+                <option value='Centre Back'>Centre back</option>
+                <option value='Sweeper'>Sweeper</option>
+                <option value='Full Back'>Full back</option>
+                <option value='Wing Back'>Wing back</option>
+                <option value='Midfield'>Midfield</option>
+                <option value='Centre Midfield'>Centre midfield</option>
+                <option value='Defensive Midfield'>Defensive midfield</option>
+                <option value='Attacking Midfield'>Attacking midfield</option>
+                <option value='Wide Midfield'>Wide midfield</option>
+                <option value='Striker'>Striker</option>
+                <option value='Centre Forward'>Centre forward</option>
+                <option value='Second Striker'>Second striker</option>
+                <option value='Winger'>Winger</option>
               </select>
               <label>Height</label>
               <input
@@ -238,9 +238,9 @@ function Register(props) {
                 name='type'
                 onChange={handlePlayerChange}
               >
-                <option value='semi-professional'>semi-professional</option>
-                <option value='professional'>professional</option>
-                <option value='amateur'>Amateur</option>
+                <option value='Semi-Professional'>Semi-Professional</option>
+                <option value='Professional'>Professional</option>
+                <option value='Amateur'>Amateur</option>
               </select>
               <label>Price</label>
               <input
