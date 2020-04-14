@@ -15,11 +15,11 @@ function MemberSearch(props) {
           onChange={handleSearchChange}
         >
           <option value=''>---</option>
-          <option value='player'>Player</option>
-          <option value='agent'>Agent</option>
-          <option value='official'>Official</option>
+          <option value='Player'>Player</option>
+          <option value='Agent'>Agent</option>
+          <option value='Official'>Official</option>
         </select>
-        {searchParams && searchParams.userType === 'player' &&
+        {searchParams && searchParams.userType === 'Player' &&
           <>
             <label>Position</label>
             <select

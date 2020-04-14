@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import LocalAuth from '../../lib/localAuth'
@@ -8,11 +8,24 @@ import { profileContext } from '../../contexts/profileContext'
 import nationalites from '../../data/nationalities.json'
 
 function Register(props) {
-  const { getProfile } = useContext(profileContext)
+  const { profile, getProfile } = useContext(profileContext)
   const [formData, setFormData] = useState({})
   const [userType, setUserType] = useState('')
   const [errors, setErrors] = useState({})
   const [playerHide, togglePlayerHide] = useToggle(false)
+  const [agents, setAgents] = useState([])
+  const [agentId, setAgentId] = useState('')
+
+  useEffect(() => {
+    axios.get('/api/agents')
+      .then((res) => {
+        setAgents(res.data)
+      })
+      .catch(err => {
+        console.log(err.response.data)
+        setErrors(err.response.data.errors)
+      })
+  }, [])
 
   function handleChange(e) {
     const data = { ...formData, [e.target.name]: e.target.value }
@@ -41,6 +54,7 @@ function Register(props) {
       .then((res) => {
         LocalAuth.setToken(res.data.token)
         getProfile()
+        if (profile.userType === 'Player') setPlayersAgent()
         props.history.push('/')
       })
       .catch(err => {
@@ -59,10 +73,18 @@ function Register(props) {
     }
   }
 
+  function setPlayersAgent() {
+    axios.post(`/api/player/${profile._id}/in/agent/${agentId}`)
+      .catch(err => {
+        console.log(err.response.data)
+        setErrors(err.response.data.errors)
+      })
+  }
+
   function setTypeDefaults(type) {
-    if (!formData.playerData && type === 'player') setFormData({ ...formData, playerData: {}, agentData: null, officialData: null })
-    if (!formData.agentData && type === 'agent') setFormData({ ...formData, agentData: {}, playerData: null, officialData: null })
-    if (!formData.officialData && type === 'official') setFormData({ ...formData, officialData: {}, playerData: null, agentData: null })
+    if (!formData.playerData && type === 'Player') setFormData({ ...formData, playerData: {}, agentData: null, officialData: null })
+    if (!formData.agentData && type === 'Agent') setFormData({ ...formData, agentData: {}, playerData: null, officialData: null })
+    if (!formData.officialData && type === 'Official') setFormData({ ...formData, officialData: {}, playerData: null, agentData: null })
 
     return true
   }
@@ -105,8 +127,8 @@ function Register(props) {
             onChange={handleChange}
           >
             <option value=''>---</option>
-            <option value='male'>Male</option>
-            <option value='agent'>Female</option>
+            <option value='Male'>Male</option>
+            <option value='Female'>Female</option>
             <option value='dont assume my gender!!'>dont assume my gender!!</option>
           </select>
           <label>Nationality</label>
@@ -138,14 +160,14 @@ function Register(props) {
             }}
           >
             <option value=''>---</option>
-            <option value='player'>Player</option>
-            <option value='agent'>Agent</option>
-            <option value='official'>Club Official</option>
+            <option value='Player'>Player</option>
+            <option value='Agent'>Agent</option>
+            <option value='Official'>Club Official</option>
           </select>
           {errors && errors.userType && <p className='u-validationError'> You must choose a profile. </p>}
-          {userType === 'agent' && setTypeDefaults(userType)}
-          {userType === 'official' && setTypeDefaults(userType)}
-          {userType === 'player' && setTypeDefaults(userType) && !playerHide &&
+          {userType === 'Agent' && setTypeDefaults(userType)}
+          {userType === 'Official' && setTypeDefaults(userType)}
+          {userType === 'Player' && setTypeDefaults(userType) && !playerHide &&
             <>
               <p 
                 className='formWrapper__link u-highlight' 
@@ -153,6 +175,21 @@ function Register(props) {
               >
                 Fill player info later?
               </p>
+              <label>Agent</label>
+              <select
+                name='agent'
+                placeholder='Agent'
+                onChange={(e) => setAgentId(e.target.value)}
+              >
+                {agents && agents.map(agent => 
+                  <option 
+                    key={agent._id} 
+                    value={agent._id}
+                  >
+                    {agent.firstName} {agent.lastName}
+                  </option>
+                )}
+              </select>
               <label>Position</label>
               <select
                 name='position'
