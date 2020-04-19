@@ -70,7 +70,7 @@ function MemberSearch(props) {
           <option key='blankNat' value=''>---</option>
           {nationalites.map(nat => {
             return (
-              <option key={nat} value={nat[0].toLowerCase() + nat.slice(1)}>{nat}</option>
+              <option key={nat} value={nat}>{nat}</option>
             )
           })}
         </select>

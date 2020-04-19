@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 
 import LocalAuth from '../lib/localAuth'
 import { profileContext } from '../contexts/profileContext'
@@ -7,6 +7,12 @@ import { profileContext } from '../contexts/profileContext'
 function Navbar() {
   const { profile } = useContext(profileContext)
   const { pathname } = useLocation()
+  const history = useHistory()
+
+  function handleLogout() {
+    LocalAuth.logout()
+    history.push('/')
+  }
 
   return (
     <nav className='navbar'>
@@ -94,6 +100,16 @@ function Navbar() {
                 >
                 </i>Log In
               </Link>
+            </li>
+          }
+          {LocalAuth.isAuthenticated() &&
+            <li>
+              <a 
+                className='navbar__links__link'
+                onClick={handleLogout}
+              >
+                <i className='fas fa-sign-in-alt'></i>Log Out
+              </a>
             </li>
           }
         </ul>

@@ -15,11 +15,33 @@ function Register(props) {
   const [playerHide, togglePlayerHide] = useToggle(false)
   const [agents, setAgents] = useState([])
   const [agentId, setAgentId] = useState('')
+  const [officials, setOfficials] = useState([])
+  const [officialId, setOfficialId] = useState('')
+  const [clubs, setClubs] = useState([])
+  const [clubId, setClubId] = useState([])
 
   useEffect(() => {
     axios.get('/api/agents')
       .then((res) => {
         setAgents(res.data)
+      })
+      .catch(err => {
+        console.log(err.response.data)
+        setErrors(err.response.data.errors)
+      })
+    
+    axios.get('/api/officials')
+      .then((res) => {
+        setOfficials(res.data)
+      })
+      .catch(err => {
+        console.log(err.response.data)
+        setErrors(err.response.data.errors)
+      })
+    
+    axios.get('/api/clubs')
+      .then((res) => {
+        setClubs(res.data)
       })
       .catch(err => {
         console.log(err.response.data)
@@ -51,10 +73,18 @@ function Register(props) {
     e.preventDefault()
     if (!validateUserType()) return
     axios.post('/api/register', formData)
-      .then((res) => {
+      .then(res => {
         LocalAuth.setToken(res.data.token)
         getProfile()
-        if (profile.userType === 'Player') setPlayersAgent()
+      })
+      .then(() => {
+        if (profile.userType === 'Player') {
+          console.log('inside player setters')
+          console.log('ids: ', agentId, officialId, clubId)
+          if (agentId) setPlayersAgent()
+          if (officialId) setPlayersOfficial()
+          if (clubId) setPlayersClub()
+        }
         props.history.push('/')
       })
       .catch(err => {
@@ -81,6 +111,22 @@ function Register(props) {
       })
   }
 
+  function setPlayersOfficial() {
+    axios.post(`/api/player/${profile._id}/in/official/${officialId}`)
+      .catch(err => {
+        console.log(err.response.data)
+        setErrors(err.response.data.errors)
+      })
+  }
+
+  function setPlayersClub() {
+    axios.post(`/api/player/${profile._id}/in/club/${clubId}`)
+      .catch(err => {
+        console.log(err.response.data)
+        setErrors(err.response.data.errors)
+      })
+  }
+
   function setTypeDefaults(type) {
     if (!formData.playerData && type === 'Player') setFormData({ ...formData, playerData: {}, agentData: null, officialData: null })
     if (!formData.agentData && type === 'Agent') setFormData({ ...formData, agentData: {}, playerData: null, officialData: null })
@@ -91,6 +137,7 @@ function Register(props) {
 
   return (
     <div className='register'>
+      {console.log('agentId: ', !agentId)}
       <div className='panelWrapper'>
         <form className='formWrapper' onSubmit={handleSubmit}>
           <div className='formWrapper__header'>
@@ -103,21 +150,21 @@ function Register(props) {
           <label>First Name</label>
           <input
             name='firstName'
-            placeholder='First Name'
+            placeholder='John'
             onChange={handleChange}
           />
           {errors && errors.firstName && <p className='u-validationError'>First name is required. </p>}
           <label>Last Name</label>
           <input
             name='lastName'
-            placeholder='Last Name'
+            placeholder='Smith'
             onChange={handleChange}
           />
           {errors && errors.lastName && <p className='u-validationError'>Last name is required. </p>}
           <label>Username</label>
           <input
             name='username'
-            placeholder='Username'
+            placeholder='johnsmith'
             onChange={handleChange}
           />
           {errors && errors.username && <p className='u-validationError'>username is required. </p>}
@@ -140,7 +187,7 @@ function Register(props) {
             <option key='blankNat' value=''>---</option>
             {nationalites.map(nat => {
               return (
-                <option key={nat} value={nat[0].toLowerCase() + nat.slice(1)}>{nat}</option>
+                <option key={nat} value={nat}>{nat}</option>
               )
             })}
           </select>
@@ -148,6 +195,12 @@ function Register(props) {
           <input
             name='email'
             placeholder='name@email.com'
+            onChange={handleChange}
+          />
+          <label>Post Code</label>
+          <input
+            name='postCode'
+            placeholder='E11 0bz'
             onChange={handleChange}
           />
           {errors && errors.email && <p className='u-validationError'>Email is required. </p>}
@@ -181,6 +234,7 @@ function Register(props) {
                 placeholder='Agent'
                 onChange={(e) => setAgentId(e.target.value)}
               >
+                <option value='None'>---</option>
                 {agents && agents.map(agent => 
                   <option 
                     key={agent._id} 
@@ -196,6 +250,7 @@ function Register(props) {
                 placeholder='Position'
                 onChange={handlePlayerChange}
               >
+                <option value='Not Specified'>---</option>
                 <option value='Defender'>Defender</option>
                 <option value='Centre Back'>Centre back</option>
                 <option value='Sweeper'>Sweeper</option>
@@ -229,29 +284,37 @@ function Register(props) {
                 placeholder='Age'
                 onChange={handlePlayerChange}
               />
-              <label>Agent</label>
-              <select
-                name='agent'
-                onChange={handlePlayerChange}
-              >
-                <option value='None' >---</option>
-                <option value='None' >None</option>
-              </select>
               <label>Official</label>
               <select
                 name='official'
-                onChange={handlePlayerChange}
+                placeholder='Official'
+                onChange={(e) => setOfficialId(e.target.value)}
               >
                 <option value='None'>---</option>
-                <option value='None'>None</option>
+                {officials && officials.map(official => 
+                  <option 
+                    key={official._id} 
+                    value={official._id}
+                  >
+                    {official.firstName} {official.lastName}
+                  </option>
+                )}
               </select>
               <label>Current Club</label>
               <select
                 name='currentClub'
-                onChange={handlePlayerChange}
+                placeholder='Current Club'
+                onChange={(e) => setClubId(e.target.value)}
               >
                 <option value='None'>---</option>
-                <option value='None'>None</option>
+                {clubs && clubs.map(club => 
+                  <option 
+                    key={club._id} 
+                    value={club._id}
+                  >
+                    {club.name}
+                  </option>
+                )}
               </select>
               <label>League</label>
               <select
