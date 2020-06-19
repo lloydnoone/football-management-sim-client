@@ -15,7 +15,8 @@ export function ProfileProvider(props) {
 
   function getProfile() {
     axios.get('api/profile', { 
-      headers: { Authorization: `Bearer ${localAuth.getToken()}` }
+      headers: { Authorization: `Bearer ${localAuth.getToken()}` },
+      baseURL: '../'
     })
       .then(res => {
         console.log('data in getProfile: ', res.data)

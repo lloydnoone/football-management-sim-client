@@ -5,8 +5,23 @@ function AgentInfoShow(props) {
   return (
     <>
       <h3>Player Transfers</h3>
-      {transfers.length === 0 && <p>None</p>}
-      {transfers.length && transfers.map(trans => {
+      {transfers.length === 0 && 
+        <>
+          <div className='memberShow__userInfo__bottom__split'>
+            <div className='memberShow__userInfo__bottom__split__labels'>
+              <ul>
+                <li>None</li>
+              </ul>
+            </div>
+            <div className='memberShow__userInfo__bottom__split__data'>
+              <ul>
+                <li></li>
+              </ul>
+            </div>
+          </div>
+        </>
+      }
+      {transfers.length > 0 && transfers.map(trans => {
         const { player: { firstName, lastName }, _id, from, to, type, fee } = trans
         console.log('trans: ', trans)
         return (
@@ -35,8 +50,23 @@ function AgentInfoShow(props) {
         )
       })}
       <h3>Current Players</h3>
-      {agentData && agentData.players.length === 0 && <p>None</p>}
-      {agentData && agentData.players.length && agentData.players.map(player => {
+      {agentData && agentData.players.length === 0 && 
+        <>
+          <div className='memberShow__userInfo__bottom__split'>
+            <div className='memberShow__userInfo__bottom__split__labels'>
+              <ul>
+                <li>None</li>
+              </ul>
+            </div>
+            <div className='memberShow__userInfo__bottom__split__data'>
+              <ul>
+                <li></li>
+              </ul>
+            </div>
+          </div>
+        </>
+      }
+      {agentData && agentData.players.length > 0 && agentData.players.map(player => {
         const { firstName, lastName, _id, playerData: { currentClub, contractEnd } } = player
         console.log('player: ', player)
         return (

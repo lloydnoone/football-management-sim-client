@@ -122,15 +122,29 @@ function Navbar() {
           </div>
         }
         <div className='navbar__icon-links'>
-          <ul className='navbar__links'>
-            <li><i className="fas fa-search"></i></li>
-            <li><i className="fas fa-bookmark"></i></li>
-          </ul>
+          {!LocalAuth.isAuthenticated() &&
+            <ul className='navbar__links'>
+              <li><i className='fas fa-search'></i></li>
+              <li><i className='fas fa-shopping-cart'></i></li>
+            </ul>
+          }
+          {LocalAuth.isAuthenticated() &&
+            <ul className='navbar__links'>
+              <li><i className='fas fa-search tooltip'><div className='tooltip_text'><span>Search</span></div></i></li>
+              <li><i className='far fa-envelope tooltip'><div className='tooltip_text'><span>Messages</span></div></i></li>
+              <li><i className='far fa-bell tooltip'><div className='tooltip_text'><span>Notifications</span></div></i></li>
+              <li><i className='fas fa-shopping-cart tooltip'><div className='tooltip_text'><span>Cart</span></div></i></li>
+            </ul>
+          }
         </div>
         {!LocalAuth.isAuthenticated() &&
           <div className='navbar__login-signup'>
             <ul className='navbar__links'>
-              <li><a>Sign in</a></li>
+              <li>
+                <Link to='/login' className='navbar__links__link'>
+                  Sign in
+                </Link>
+              </li>
               <li>
                 <Link to='/register' className='btn'>
                   <span>Sign up</span>

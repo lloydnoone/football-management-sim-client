@@ -22,6 +22,12 @@ h2 {
   line-height: 5rem;
 }
 
+.tooltip .tooltip_text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.4rem;
+ 
+}
+
 .navbar {
   &__logo {
     h2 {
@@ -40,8 +46,6 @@ h2 {
     font-weight: 400;
     font-style: normal;
     font-size: 1.4rem;
-
-    
 
     &__link:visited {
         color: $color-white;
@@ -113,7 +117,7 @@ h2 {
   }
 }
 
-.memberShow__social {
+.memberSocial {
   h4 {
     color: $color-teal;
     font-weight: 600;

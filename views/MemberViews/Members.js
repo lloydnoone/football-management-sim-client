@@ -48,7 +48,6 @@ function Members() {
           } else {
             // regex for name search
             if (key === 'firstName' || key === 'lastName') {
-              //return member[key].startsWith(RegExp(`/${searchParams[key]}/i`))
               return RegExp(`${searchParams[key]}*`,'gi').test(member[key])
             }
             // filter by generic user data

@@ -1,0 +1,43 @@
+.tooltip {
+  //container element
+  position: relative;
+  &_text {
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    visibility: hidden;
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+    left: -40px;
+    bottom: -35px;
+    opacity: 0;
+    transition: opacity 1s;
+    
+
+    & span {
+      background-color: $color-grey-light;
+      color: white;
+      box-shadow: 0px 0px 7px -3px rgba(0,0,0,0.75);
+      padding: 5px;
+      border-radius: 6px;
+    }
+
+    //Arrow
+    &::after {
+      content: ' ';
+      position: absolute;
+      bottom: 100%; //at the top of the tooltip
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent $color-grey-light transparent;
+    }
+  }
+
+  &:hover &_text {
+    opacity: 1;
+    visibility: visible;
+  }
+}

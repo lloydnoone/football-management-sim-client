@@ -5,6 +5,7 @@ import axios from 'axios'
 import PlayerInfoShow from '../../components/PlayerInfoShow'
 import AgentInfoShow from '../../components/AgentInfoShow'
 import OfficialInfoShow from '../../components/OfficialInfoShow'
+import MemberSocial from '../../components/MemberSocial'
 
 function MemberShow() {
   const { id } = useParams()
@@ -17,26 +18,13 @@ function MemberShow() {
   }, [])
 
   if (!member) return null
-  const { firstName, lastName, userType, username, createdAt, imageUrl, playerData, agentData, nationality, transfers } = member
+  const { firstName, lastName, userType, username, createdAt, imageUrl, playerData, nationality } = member
   // use player type instead if it is a player
   const displayType = playerData ? playerData.type : userType
   return (
     <div className='memberShow'>
       {console.log(member)}
-      <div className='memberShow__social'>
-        <div className='panelWrapper memberShow__social__panel'>
-          <h4>WHO&apos;S ONLINE</h4>
-        </div>
-        <div className='panelWrapper memberShow__social__panel'>
-          <h4>RECENTLY ACTIVE MEMBERS</h4>
-        </div>
-        <div className='panelWrapper memberShow__social__panel'>
-          <h4>MEMBERS CONNECTIONS</h4>
-        </div>
-        <div className='panelWrapper memberShow__social__panel'>
-          <h4>OTHER</h4>
-        </div>
-      </div>
+      <MemberSocial />
       <div className='memberShow__userInfo'>
         <div className='memberShow__userInfo__top'>
           <img className='memberShow__userInfo__top__dashImage'/>
