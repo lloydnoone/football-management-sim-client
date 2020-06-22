@@ -2,12 +2,16 @@ import React, { useContext } from 'react'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 
 import LocalAuth from '../lib/localAuth'
+import useToggle from '../hooks/useToggle'
 import { profileContext } from '../contexts/profileContext'
+
+import DropdownMenu from '../components/DropdownMenu'
 
 function Navbar() {
   const { profile } = useContext(profileContext)
   const { pathname } = useLocation()
   const history = useHistory()
+  const [notificationMenu, toggleNotificationMenu] = useToggle(false)
 
   function handleLogout() {
     LocalAuth.logout()
@@ -130,10 +134,38 @@ function Navbar() {
           }
           {LocalAuth.isAuthenticated() &&
             <ul className='navbar__links'>
-              <li><i className='fas fa-search tooltip'><div className='tooltip_text'><span>Search</span></div></i></li>
-              <li><i className='far fa-envelope tooltip'><div className='tooltip_text'><span>Messages</span></div></i></li>
-              <li><i className='far fa-bell tooltip'><div className='tooltip_text'><span>Notifications</span></div></i></li>
-              <li><i className='fas fa-shopping-cart tooltip'><div className='tooltip_text'><span>Cart</span></div></i></li>
+              <li>
+                <i className='fas fa-search tooltip'>
+                  <div className='tooltip_text'>
+                    <span>Search</span>
+                  </div>
+                </i>
+              </li>
+              <li>
+                <i className='far fa-envelope tooltip'>
+                  <div className='tooltip_text'>
+                    <span>Messages</span>
+                  </div>
+                </i>
+              </li>
+              <li>
+                <i className='far fa-bell tooltip' onClick={() => toggleNotificationMenu(!notificationMenu)}>
+                  <DropdownMenu visible={notificationMenu}/>
+                  {!notificationMenu &&
+                    <div className='tooltip_text'>
+                      <span>Notifications</span>
+                    </div>
+                  }
+                  <span className='notification-nav'>2</span>
+                </i>
+              </li>
+              <li>
+                <i className='fas fa-shopping-cart tooltip'>
+                  <div className='tooltip_text'>
+                    <span>Cart</span>
+                  </div>
+                </i>
+              </li>
             </ul>
           }
         </div>

@@ -1,5 +1,3 @@
-view profile
-
 add connections in seed file
 connections
 
