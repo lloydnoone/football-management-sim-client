@@ -163,7 +163,6 @@ h2 {
     & h3 {
       font-weight: 400;
       font-size: 1.8rem;
-      margin-left: 30px;
       color: $color-teal;
       margin: 20px 30px;
     }
@@ -171,6 +170,29 @@ h2 {
     & ul li {
       font-weight: 400;
       font-size: 1.3rem;
+    }
+  }
+}
+
+.dropdownMenu {
+  &__header {
+    font-family: Roboto;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: $color-teal;
+  }
+
+  &__item__info {
+    &__text {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      font-style: normal;
+      font-size: 1.6rem;
+    }
+
+    &__timeStamp {
+      font-family: 'Roboto', sans-serif;
+      color: $color-grey-faint;
     }
   }
 }
