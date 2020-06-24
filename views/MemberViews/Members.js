@@ -31,10 +31,22 @@ function Members() {
   }
 
   function filterMembers() {
+    //filter members by quick filters first
+    const QFMembers = members
+      .filter(member => {
+        if (filterData.userType === 'allTypes') return true
+        //if player then filter by contract type
+        if (member.playerData) {
+          console.log('playerData: ', member.playerData.type === filterData.userType)
+          return (member.playerData.type === filterData.userType)
+        }
+        return (member.userType === filterData.userType)
+      })
+    
     //check if user has entered search data if not return unfiltered
-    if (Object.values(searchParams).every(val => val === undefined || val === '')) return members
-    // if it is filter the agents and officials first
-    return members
+    if (Object.values(searchParams).every(val => val === undefined || val === '')) return QFMembers
+    // if it is filter the agents and officials first after quick filters
+    return QFMembers
       .filter(member => {
         const { playerData } = member
         // convert string input to compare against user data
@@ -75,9 +87,9 @@ function Members() {
               onChange={handleChange}
             >
               <option value='allTypes'>All Types</option>
-              <option value='professional'>Professional</option>
-              <option value='semi-professional'>Semi-Professional</option>
-              <option value='amateur'>Amateur</option>
+              <option value='Professional'>Professional</option>
+              <option value='Semi-Professional'>Semi-Professional</option>
+              <option value='Amateur'>Amateur</option>
               <option value='Agent'>Agent</option>
               <option value='Official'>Club Official</option>
             </select>
@@ -98,8 +110,7 @@ function Members() {
           <div 
             className={`members__display__list ${grid === true ? 'u-grid' : 'u-list'}`}
           >
-            {members && filterMembers()//members
-              .filter(member => (member.userType === filterData.userType) || filterData.userType === 'allTypes')
+            {members && filterMembers()
               .sort((a, b) => sortMembers(a, b))
               .map(member => {
                 return (
@@ -114,7 +125,7 @@ function Members() {
       </div>
       <MemberSearch 
         searchParams={searchParams}
-        handleSearchChange={handleSearchChange} 
+        handleSearchChange={handleSearchChange}
       />
     </div>
   )

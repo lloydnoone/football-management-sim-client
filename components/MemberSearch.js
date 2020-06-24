@@ -28,27 +28,27 @@ function MemberSearch(props) {
               onChange={handleSearchChange}
             >
               <option value=''>---</option>
-              <option value='defender'>Defender</option>
-              <option value='centre back'>Centre back</option>
-              <option value='sweeper'>Sweeper</option>
-              <option value='full back'>Full back</option>
-              <option value='wing back'>Wing back</option>
-              <option value='midfield'>Midfield</option>
-              <option value='centre midfield'>Centre midfield</option>
-              <option value='defensive midfield'>Defensive midfield</option>
-              <option value='attacking midfield'>Attacking midfield</option>
-              <option value='wide midfield'>Wide midfield</option>
-              <option value='striker'>Striker</option>
-              <option value='centre forward'>Centre forward</option>
-              <option value='second striker'>Second striker</option>
-              <option value='winger'>Winger</option>
+              <option value='Defender'>Defender</option>
+              <option value='Centre Back'>Centre back</option>
+              <option value='Sweeper'>Sweeper</option>
+              <option value='Full Back'>Full back</option>
+              <option value='Wing Back'>Wing back</option>
+              <option value='Midfield'>Midfield</option>
+              <option value='Centre Midfield'>Centre midfield</option>
+              <option value='Defensive Midfield'>Defensive midfield</option>
+              <option value='Attacking Midfield'>Attacking midfield</option>
+              <option value='Wide Midfield'>Wide midfield</option>
+              <option value='Striker'>Striker</option>
+              <option value='Centre Forward'>Centre forward</option>
+              <option value='Second Striker'>Second striker</option>
+              <option value='Winger'>Winger</option>
             </select>
             <label>League</label>
             <select
               name='league'
               onChange={handleSearchChange}
             >
-              <option value='None'>---</option>
+              <option value=''>---</option>
               <option value='None'>None</option>
               <option value='Premier League'>Premier League</option>
               <option value='Champions League'>Champions League</option>
