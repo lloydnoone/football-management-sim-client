@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Switch, Link, Route, useRouteMatch } from 'react-router-dom'
 import axios from 'axios'
 
-import PlayerInfoShow from '../../components/PlayerInfoShow'
-import AgentInfoShow from '../../components/AgentInfoShow'
-import OfficialInfoShow from '../../components/OfficialInfoShow'
 import MemberSocial from '../../components/MemberSocial'
+import Profile from '../../components/Profile'
 
 function MemberShow() {
   const { id } = useParams()
   const [member, setMember] = useState()
+  //path to build route paths relative to parent route,
+  //url to build relative links
+  const { path, url } = useRouteMatch()
 
   useEffect(() => {
     axios.get(`/api/users/${id}`)
@@ -18,9 +19,10 @@ function MemberShow() {
   }, [])
 
   if (!member) return null
-  const { firstName, lastName, userType, username, createdAt, imageUrl, playerData, nationality } = member
+  const { firstName, lastName, userType, username, createdAt, imageUrl, playerData } = member
   // use player type instead if it is a player
   const displayType = playerData ? playerData.type : userType
+
   return (
     <div className='memberShow'>
       {console.log(member)}
@@ -51,48 +53,29 @@ function MemberShow() {
           </div>
           <div className='memberShow__userInfo__top__profileNav'>
             <ul>
-              <li>Profile</li>
+              <li>
+                <Link to={`${url}/profile`}>Profile</Link>
+              </li>
               <li>Location</li>
               <li>Timeline</li>
-              <li>Connections</li>
+              <li>
+                <Link to={`${url}/connections`}>Connections</Link>
+              </li>
               <li>Groups</li>
               <li>Forums</li>
               <li>Photos</li>
             </ul>
           </div>
         </div>
-        <div className='memberShow__userInfo__bottom'>
-          <h2>Profile</h2>
-          <h3>Basic Info</h3>
-          <div className='memberShow__userInfo__bottom__split'>
-            <div className='memberShow__userInfo__bottom__split__labels'>
-              <ul>
-                <li>First Name</li>
-                <li>Last Name</li>
-                <li>User Name</li>
-                <li>Profile Type</li>
-                <li>Nationality</li>
-              </ul>
-            </div>
-            <div className='memberShow__userInfo__bottom__split__data'>
-              <ul>
-                <li>{firstName}</li>
-                <li>{lastName}</li>
-                <li>{username}</li>
-                <li>{userType}</li>
-                <li>{nationality}</li>
-              </ul>
-            </div>
-          </div>
-          {userType === 'Player' &&
-            <PlayerInfoShow member={member} />
-          }
-          {userType === 'Agent' &&
-            <AgentInfoShow member={member} />
-          }
-          {userType === 'Official' &&
-            <OfficialInfoShow member={member} />
-          }
+        <div>
+          <Switch>
+            <Route path={`${path}/profile`}>
+              <Profile member={member}/>
+            </Route>
+            <Route path={`${path}/connections`}>
+              <h3>connections stuff goes here. </h3>
+            </Route>
+          </Switch>
         </div>
       </div>
     </div>
