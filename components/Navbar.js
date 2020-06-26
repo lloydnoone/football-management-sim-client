@@ -159,7 +159,9 @@ function Navbar() {
                       <span>Notifications</span>
                     </div>
                   }
-                  <span className='notification-nav'>2</span>
+                  {profile.connectionRequests && profile.connectionRequests.length > 0 &&
+                    <span className='notification-nav'>{profile.connectionRequests.length}</span>
+                  }
                 </i>
               </li>
               <li>
