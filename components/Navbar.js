@@ -150,7 +150,10 @@ function Navbar() {
               </li>
               <li>
                 <i className='far fa-bell tooltip' onClick={() => toggleNotificationMenu(!notificationMenu)}>
-                  <DropdownMenu visible={notificationMenu}/>
+                  <DropdownMenu 
+                    visible={notificationMenu} 
+                    { ...profile }
+                  />
                   {!notificationMenu &&
                     <div className='tooltip_text'>
                       <span>Notifications</span>

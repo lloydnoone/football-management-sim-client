@@ -9,8 +9,13 @@ function ConnectButton(props) {
   const [requestStatus, setRequestStatus] = useState(false)
 
   useEffect(() => {
-    if (profile.sentRequests) setRequestStatus(profile.sentRequests.includes(props.memberId))
+    if (profile.sentRequests) setButtonStatus(props.memberId)
   }, [profile])
+
+  function setButtonStatus(profileId) {
+    //set status on member card to match wether the request can be found in the profiles sent requests
+    setRequestStatus(profile.sentRequests.some(req => req.toUser._id === profileId))
+  }
 
   function handleClick(e) {
     // if member already has sent request then delete it from user and member
@@ -24,7 +29,7 @@ function ConnectButton(props) {
           getProfile()
         })
         .then(() => {
-          setRequestStatus(profile.sentRequests.includes(props.memberId))
+          setButtonStatus(props.memberId)
         })
         .catch(err => {
           console.log('err in send request', err.response.data.message)
@@ -38,7 +43,7 @@ function ConnectButton(props) {
           getProfile()
         })
         .then(() => {
-          setRequestStatus(profile.sentRequests.includes(props.memberId))
+          setButtonStatus(props.memberId)
         })
         .catch(err => {
           console.log('err in delete request: ', err.response.data.message)
