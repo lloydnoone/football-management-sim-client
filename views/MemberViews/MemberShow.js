@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Switch, Link, Route, useRouteMatch } from 'react-router-dom'
+import { useParams, Switch, Link, Route, useRouteMatch, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 import MemberSocial from '../../components/MemberSocial'
@@ -11,6 +11,7 @@ function MemberShow() {
   //path to build route paths relative to parent route,
   //url to build relative links
   const { path, url } = useRouteMatch()
+  const location = useLocation().pathname
 
   useEffect(() => {
     axios.get(`/api/users/${id}`)
@@ -22,7 +23,7 @@ function MemberShow() {
   const { firstName, lastName, userType, username, createdAt, imageUrl, playerData } = member
   // use player type instead if it is a player
   const displayType = playerData ? playerData.type : userType
-
+  
   return (
     <div className='memberShow'>
       {console.log(member)}
@@ -54,12 +55,22 @@ function MemberShow() {
           <div className='memberShow__userInfo__top__profileNav'>
             <ul>
               <li>
-                <Link to={`${url}/profile`}>Profile</Link>
+                <Link 
+                  to={`${url}/profile`} 
+                  className={location === `${url}/profile` ? 'current' : ''}
+                >
+                  Profile
+                </Link>
               </li>
               <li>Location</li>
               <li>Timeline</li>
               <li>
-                <Link to={`${url}/connections`}>Connections</Link>
+                <Link 
+                  to={`${url}/connections`}
+                  className={location === `${url}/connections` ? 'current' : ''}
+                >
+                  Connections
+                </Link>
               </li>
               <li>Groups</li>
               <li>Forums</li>
@@ -74,6 +85,9 @@ function MemberShow() {
             </Route>
             <Route path={`${path}/connections`}>
               <h3>connections stuff goes here. </h3>
+            </Route>
+            <Route exact path={`${path}`}>
+              <Profile member={member}/>
             </Route>
           </Switch>
         </div>

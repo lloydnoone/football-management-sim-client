@@ -147,6 +147,21 @@ h2 {
         }
       }
     }
+
+    &__profileNav {
+      & ul li {
+          a {
+          text-decoration: none;
+          color: $color-teal;
+          &:hover {
+            color: $color-hover-blue;
+          }
+          &.current {
+            color: $color-visited-blue;
+          }
+        }
+      }
+    }
   }
 
   &__bottom {
