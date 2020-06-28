@@ -28,6 +28,7 @@ function MemberDisplay(props) {
       })
     
     //check if user has entered search data if not return unfiltered
+    if (!searchParams) return QFMembers
     if (Object.values(searchParams).every(val => val === undefined || val === '')) return QFMembers
     // if it is filter the agents and officials first after quick filters
     return QFMembers

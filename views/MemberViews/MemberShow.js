@@ -3,12 +3,13 @@ import { useParams, Switch, Link, Route, useRouteMatch, useLocation } from 'reac
 import axios from 'axios'
 
 import MemberSocial from '../../components/MemberSocial'
-import Profile from '../../components/Profile'
+import Profile from '../../views/MemberViews/Profile'
+import Connections from '../../views/MemberViews/Connections'
 
 function MemberShow() {
   const { id } = useParams()
   const [member, setMember] = useState()
-  //path to build route paths relative to parent route,
+  //'path' to build route paths relative to parent route,
   //url to build relative links
   const { path, url } = useRouteMatch()
   const location = useLocation().pathname
@@ -84,7 +85,7 @@ function MemberShow() {
               <Profile member={member}/>
             </Route>
             <Route path={`${path}/connections`}>
-              <h3>connections stuff goes here. </h3>
+              <Connections member={member}/>
             </Route>
             <Route exact path={`${path}`}>
               <Profile member={member}/>

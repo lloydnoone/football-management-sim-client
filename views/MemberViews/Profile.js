@@ -1,8 +1,8 @@
 import React from 'react'
 
-import PlayerInfoShow from '../components/PlayerInfoShow'
-import AgentInfoShow from '../components/AgentInfoShow'
-import OfficialInfoShow from '../components/OfficialInfoShow'
+import PlayerInfoShow from '../../components/PlayerInfoShow'
+import AgentInfoShow from '../../components/AgentInfoShow'
+import OfficialInfoShow from '../../components/OfficialInfoShow'
 
 //container element must be position relative
 function Profile(props) {
