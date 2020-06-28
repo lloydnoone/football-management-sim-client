@@ -5,6 +5,7 @@ import useFormState from '../../hooks/useFormState'
 
 import MemberCard from '../../components/MemberCard'
 import MemberSearch from '../../components/MemberSearch'
+import MemberFilters from '../../components/MemberFilters'
 
 function Members() {
   const [members, setMembers] = useState([])
@@ -36,10 +37,7 @@ function Members() {
       .filter(member => {
         if (filterData.userType === 'allTypes') return true
         //if player then filter by contract type
-        if (member.playerData) {
-          console.log('playerData: ', member.playerData.type === filterData.userType)
-          return (member.playerData.type === filterData.userType)
-        }
+        if (member.playerData) return (member.playerData.type === filterData.userType)
         return (member.userType === filterData.userType)
       })
     
@@ -81,32 +79,10 @@ function Members() {
           <span className='notification'>{members && members.length}</span>
         </h2>
         <div className='members__display'>
-          <div className='members__display__filters'>
-            <select
-              name='userType'
-              onChange={handleChange}
-            >
-              <option value='allTypes'>All Types</option>
-              <option value='Professional'>Professional</option>
-              <option value='Semi-Professional'>Semi-Professional</option>
-              <option value='Amateur'>Amateur</option>
-              <option value='Agent'>Agent</option>
-              <option value='Official'>Club Official</option>
-            </select>
-            <select
-              name='userOrder'
-              onChange={handleChange}
-            >
-              <option value='recentlyActive'>Recently Active</option>
-              <option value='newestMembers'>Newest Members</option>
-              <option value='alphabetical'>alphabetical</option>
-            </select>
-            <div className='members__display__style'>
-              <i className="fas fa-grip-horizontal" onClick={() => toggleGrid()}></i>
-              <p>|</p>
-              <i className="fas fa-bars" onClick={() => toggleGrid()}></i>
-            </div>
-          </div>
+          <MemberFilters
+            handleChange={handleChange}
+            toggleGrid={toggleGrid}
+          />
           <div 
             className={`members__display__list ${grid === true ? 'u-grid' : 'u-list'}`}
           >
